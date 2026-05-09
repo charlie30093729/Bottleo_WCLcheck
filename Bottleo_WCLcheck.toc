@@ -1,0 +1,7 @@
+## Interface: 120000
+## Title: Bottleo WCL Check
+## Notes: Checks Warcraft Logs lookup for LFG applicants
+## Author: Bottleo (discord)
+## Version: 1.0.0
+
+Bottleo_WCLcheck.lua
