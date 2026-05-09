@@ -17,3 +17,40 @@ Clicking the button shows a copyable Warcraft Logs character URL for that applic
 
 ```text
 https://www.warcraftlogs.com/character/us/frostmourne/CharacterName?zone=47
+Installation
+Download the addon.
+Extract the folder into your World of Warcraft Retail addons folder:
+World of Warcraft/_retail_/Interface/AddOns/
+The final folder should look like this:
+Interface/AddOns/Bottleo_WCLcheck/
+Restart World of Warcraft or type:
+/reload
+Open the AddOns menu and make sure Bottleo WCL Check is enabled.
+Usage
+
+List a group in LFG and wait for applicants.
+
+A small WCL button should appear on each applicant row. Clicking the button opens a copyable Warcraft Logs URL for that applicant.
+
+You can also manually test the popup with:
+
+/bwcl Character-Realm
+
+Example:
+
+/bwcl Redthistle-Frostmourne
+
+You can manually refresh the LFG applicant buttons with:
+
+/wclcheck
+Notes
+
+This addon does not pull DPS, parse, ranking, or combat log data directly from Warcraft Logs.
+
+World of Warcraft addons cannot make normal web/API requests from inside the game client, so this addon only generates a copyable Warcraft Logs URL.
+
+Disclaimer
+
+This addon is not affiliated with, endorsed by, or sponsored by Warcraft Logs.
+
+Warcraft Logs is a third-party service operated separately from this addon.
