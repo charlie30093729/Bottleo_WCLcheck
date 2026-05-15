@@ -1,6 +1,16 @@
 local ADDON_NAME = ...
 local REGION = "us" -- OCE realms use the US Warcraft Logs region.
 
+local LfgMode = {
+    Raid = "raid",
+    MythicPlus = "mplus"
+}
+
+local currentLfgMode = LfgMode.MythicPlus
+
+local RAID_ZONE = "46"
+local MYTHIC_PLUS_ZONE = "47"
+
 -- Converts a realm name into the format Warcraft Logs expects.
 -- Example: "Frostmourne" stays "frostmourne", "Area 52" becomes "area52".
 local function NormaliseRealm(realm)
@@ -40,7 +50,13 @@ local function BuildWarcraftLogsURL(fullName)
 
     realm = NormaliseRealm(realm)
 
-    return "https://www.warcraftlogs.com/character/" .. REGION .. "/" .. realm .. "/" .. name .. "?zone=47"
+    local zone = MYTHIC_PLUS_ZONE
+
+    if currentLfgMode == LfgMode.Raid then
+        zone = RAID_ZONE
+    end
+
+    return "https://www.warcraftlogs.com/character/" .. REGION .. "/" .. realm .. "/" .. name .. "?zone=" .. zone
 end
 
 -- Popup window used to display the URL.
@@ -263,13 +279,35 @@ local function UpdateApplicantButtons()
     end
 end
 
--- Manual test command.
--- Example: /bwcl Chappys-Frostmourne
+-- Manual test and mode command.
 SLASH_BOTTLEOWCL1 = "/bwcl"
 
 SlashCmdList["BOTTLEOWCL"] = function(msg)
-    if msg == nil or msg == "" then
-        print("|cffffff00Usage: /bwcl Character-Realm|r")
+    msg = msg or ""
+    msg = strtrim(msg)
+
+    local command = msg:lower()
+
+    if command == "m" or command == "m+" or command == "mplus" then
+        currentLfgMode = LfgMode.MythicPlus
+        print("|cff00ff00Bottleo WCL Check:|r Mode set to Mythic+ using zone " .. MYTHIC_PLUS_ZONE .. ".")
+        return
+    end
+
+    if command == "raid" or command == "r" then
+        currentLfgMode = LfgMode.Raid
+        print("|cff00ff00Bottleo WCL Check:|r Mode set to Raid using zone " .. RAID_ZONE .. ".")
+        return
+    end
+
+    if command == "status" or command == "" then
+        if currentLfgMode == LfgMode.Raid then
+            print("|cff00ff00Bottleo WCL Check:|r Current mode: Raid, zone " .. RAID_ZONE .. ".")
+        else
+            print("|cff00ff00Bottleo WCL Check:|r Current mode: Mythic+, zone " .. MYTHIC_PLUS_ZONE .. ".")
+        end
+
+        print("|cffffff00Commands: /bwcl m, /bwcl raid, /bwcl Character-Realm|r")
         return
     end
 
